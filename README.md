@@ -1,11 +1,16 @@
-# SpatialTrackerV2: 3D Point Tracking Made Easy
+# SpatialTrackerV3: 3D Point Tracking Made Easy
 
 **[CAD&CG, Zhejiang University](https://github.com/zju3dv)**; **[University of Oxford](https://www.robots.ox.ac.uk/~vgg/)**; **[Ant Research](https://www.antresearch.com/)**; **[Pixelwise AI](http://pixelwise.ai/)**; **[ByteDance Seed](https://seed.bytedance.com/zh/)**
 
 [Yuxi Xiao](https://henry123-boy.github.io/), [Jianyuan Wang](https://jytime.github.io/), [Nan Xue](https://xuenan.net/), [Nikita Karaev](https://nikitakaraevv.github.io/), [Iurii Makarov](https://linkedin.com/in/lvoursl), [Bingyi Kang](https://bingykang.github.io/), [Xin Zhu](https://openreview.net/profile?id=~Xing_Zhu2), [Hujun Bao](http://www.cad.zju.edu.cn/home/bao/), [Yujun Shen](https://shenyujun.github.io/), [Xiaowei Zhou](https://www.xzhou.me/)
 
-### [Project Page]() | [Paper V1]() | [Paper V2]() | [BibTeX]() | [Goolge Drive]() 
+### [Project Page]() | [BibTeX]() | [Goolge Drive]() 
 
+<!-- [Paper V1]() | [Paper V2]() | [Paper V3]() | -->
+
+<a href="https://arxiv.org/abs/xxx">
+  <img alt="Technical Report" src="https://img.shields.io/badge/Technical%20Report-arXiv:xxx">
+</a>
 <a target="_blank" href="">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
@@ -13,14 +18,15 @@
   <img alt="Spaces" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue">
 </a>
 
+
 <img width="1100" src="./assets/teaser_1.png" />
 
 ## TODO List
 
 1. **Release Offline Version**
-   - [x] `SpaTrack2` + `Moge` ➔ supports `unposed RGB` as input.
-   - [x] `SpaTrack2`+ `MegaSAM` ➔ supports `Posed RGBD` as input. 
-   - [x] `SpaTrack2` + `VGGT` ➔ make `VGGT` works in `Dynamic Scenes`.
+   - [x] `SpaTrack3` + `Moge` ➔ supports `unposed RGB` as input.
+   - [x] `SpaTrack3`+ `MegaSAM` ➔ supports `Posed RGBD` as input. 
+   - [x] `SpaTrack3` + `VGGT` ➔ make `VGGT` works in `Dynamic Scenes`.
 
 2. **Release Online Version**
    - [ ] Sliding windows version.
@@ -34,15 +40,15 @@ To set up the environment for running the SpaTrack model, follow these steps:
 
 1. **Clone the Repository:**
    ```bash
-   git clone git@github.com:henry123-boy/SpaTrack2.git
-   cd SpaTrack2
+   git clone git@github.com:henry123-boy/SpaTrackerV3.git
+   cd SpaTrackerV3
    ```
 
 2. **Create a Virtual Environment:**
    It's recommended to use a virtual environment to manage dependencies.
    ```bash
-   conda create -n SpaTrack2 python=3.11
-   conda activate SpaTrack2
+   conda create -n SpaTrack3 python=3.11
+   conda activate SpaTrack3
    ```
 
 3. **Install Dependencies:**
@@ -57,7 +63,7 @@ To set up the environment for running the SpaTrack model, follow these steps:
    python -m pip install -r requirements.txt
    ```
 
-4. **Install SpaTrack2 Visualizer:**
+4. **Install SpaTrack3 Visualizer:**
    
    ```bash
    cd viser
@@ -72,12 +78,12 @@ mkdir -p checkpoints
 ```
 Step1: Download the checkpoint of `Moge` from [here](https://github.com/microsoft/MoGe), and put the `model.pt` into `./checkpoints/`
 
-Step2: Download the checkpoint of `SpaTrack2` from [GoolgeDrive](https://drive.google.com/drive/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?usp=sharing), and place it into `./checkpoints/`
+Step2: Download the checkpoint of `SpaTrack3` from [GoolgeDrive](https://drive.google.com/drive/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?usp=sharing), and place it into `./checkpoints/`
 
 
 
 ## Quick Start
-We gave two examples to illustrate the usage of `SpaTrack2`. Firstly, please download `ckpts` and `examples` via:
+We gave two examples to illustrate the usage of `SpaTrack3`. Firstly, please download `ckpts` and `examples` via:
 ```
 sh scripts/download.sh
 ```   
