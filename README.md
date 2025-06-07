@@ -9,7 +9,7 @@
 <!-- [Paper V1]() | [Paper V2]() | [Paper V3]() | -->
 
 <a href="https://arxiv.org/abs/xxx">
-  <img alt="Technical Report" src="https://img.shields.io/badge/Technical%20Report-arXiv:xxx">
+  <img alt="Technical Report" src="https://img.shields.io/badge/Technical%20Report-arXiv:xxx" style="border: 1px solid black;">
 </a>
 <a target="_blank" href="">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
