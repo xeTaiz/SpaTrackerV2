@@ -4,12 +4,12 @@
 
 [Yuxi Xiao](https://henry123-boy.github.io/), [Jianyuan Wang](https://jytime.github.io/), [Nan Xue](https://xuenan.net/), [Nikita Karaev](https://nikitakaraevv.github.io/), [Iurii Makarov](https://linkedin.com/in/lvoursl), [Bingyi Kang](https://bingykang.github.io/), [Xin Zhu](https://openreview.net/profile?id=~Xing_Zhu2), [Hujun Bao](http://www.cad.zju.edu.cn/home/bao/), [Yujun Shen](https://shenyujun.github.io/), [Xiaowei Zhou](https://www.xzhou.me/)
 
-### [Project Page]() | [Paper V1]() | [Paper V2]() | [BibTeX]() | [Goolge Drive](https://drive.google.com/drive/u/1/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?dmr=1&ec=wgc-drive-globalnav-goto) 
+### [Project Page]() | [Paper V1]() | [Paper V2]() | [BibTeX]() | [Goolge Drive]() 
 
-<a target="_blank" href="https://colab.research.google.com/github/facebookresearch/co-tracker/blob/main/notebooks/demo.ipynb">
+<a target="_blank" href="">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
-<a href="https://huggingface.co/spaces/facebook/cotracker">
+<a href="">
   <img alt="Spaces" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue">
 </a>
 
@@ -17,17 +17,15 @@
 
 ## TODO List
 
-1. **Release Stage 1 Checkpoint**
-   - [x] `SpaTrack2`+ `MegaSAM` ➔ supports `Posed RGBD` as input. 
+1. **Release Offline Version**
    - [x] `SpaTrack2` + `Moge` ➔ supports `unposed RGB` as input.
+   - [x] `SpaTrack2`+ `MegaSAM` ➔ supports `Posed RGBD` as input. 
+   - [x] `SpaTrack2` + `VGGT` ➔ make `VGGT` works in `Dynamic Scenes`.
 
-2. **Release Stage 2 Checkpoint**
-   - [ ] Track-guided Depth Stablizer.
-
-3. **Release Stage 3 Checkpoint**
+2. **Release Online Version**
    - [ ] Sliding windows version.
 
-4. **More Releases**
+3. **More Releases**
    - [ ] Some `Ceres Python Bindings` designed for SpatialTracker and Dynamic Reconstruction.
    - [ ] More supports for other Depth Model, *i.e.*, `DepthAnything`, `StereoFoundation`, `UniDepth`, `Metric3D`.
 
