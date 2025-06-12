@@ -98,7 +98,7 @@ python inference.py --data_type="RGB" --data_dir="assets/example1" --video_name=
 ```
 
 ### Visualize your results
-We provide two types of visualization. The guidance will be displayed in the terminal after running `inference.py`
+We provide two types of visualization, i.e. `viser` and `TAPIP3D`. The guidance will be displayed in the terminal after running `inference.py`.
 
 ## 🌟 Recommended: Gradio Demo with SAM 🌟
 Please follow the instructions in the [app_3rd README](app_3rd/README.md) to configure the dependencies. Then, 
