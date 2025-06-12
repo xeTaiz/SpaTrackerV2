@@ -109,5 +109,5 @@ Our gradio demo enable the user to track the points on the target object easily,
 ```
 python app.py
 ```
-### ***Note❗***
-For users employing `vscode` as their IDE, the 3D trajectory visualization will automatically appear. Ensure that the port is accessible and consistent both locally and on the server. If not, you may need to manually forward the port using `SSH -L`.
+![Demo](assets/gradio.gif)
+
