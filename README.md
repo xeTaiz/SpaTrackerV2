@@ -109,5 +109,6 @@ Our gradio demo enable the user to track the points on the target object easily,
 ```
 python app.py
 ```
-![Demo]("./assets/gradio.gif")
+![Demo](./assets/gradio.gif)
+
 
