@@ -24,9 +24,9 @@
 ## TODO List
 
 1. **Release Offline Version**
-   - [x] `SpaTrack3` + `Moge` ➔ supports `unposed RGB` as input.
-   - [x] `SpaTrack3`+ `MegaSAM` ➔ supports `Posed RGBD` as input. 
-   - [x] `SpaTrack3` + `VGGT` ➔ make `VGGT` works in `Dynamic Scenes`.
+   - [x] `SpaTrack2` + `Moge` ➔ supports `unposed RGB` as input.
+   - [x] `SpaTrack2`+ `MegaSAM` ➔ supports `Posed RGBD` as input. 
+   - [x] `SpaTrack2` + `VGGT` ➔ make `VGGT` works in `Dynamic Scenes`.
 
 2. **Release Online Version**
    - [ ] Sliding windows version.
