@@ -1,4 +1,4 @@
-# SpatialTrackerV3: 3D Point Tracking Made Easy
+# SpatialTrackerV2: 3D Point Tracking Made Easy
 
 **[CAD&CG, Zhejiang University](https://github.com/zju3dv)**; **[University of Oxford](https://www.robots.ox.ac.uk/~vgg/)**; **[Ant Research](https://www.antresearch.com/)**; **[Pixelwise AI](http://pixelwise.ai/)**; **[NUS](https://nus.edu.sg/)**
 
