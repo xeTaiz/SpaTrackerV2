@@ -21,6 +21,29 @@
 
 <img width="1100" src="./assets/teaser_1.png" />
 
+
+## 🚀 Latest Updates & News
+
+<div align="center">
+
+### 🎉 What's New & Exciting! 🎉
+
+</div>
+
+---
+
+🔥 **Stay tuned for the most exciting developments!** We're constantly pushing the boundaries of 3D tracking technology! 🔥
+
+### 📅 Recent Highlights
+
+🎯 **June 2025:** 🌟 **LIVE DEMO IS HERE!** 🌟  
+🤖 Try our amazing Huggingface Space Demo: https://huggingface.co/spaces/Yuxihenry/SpatialTrackerV2  
+✨ Experience the magic of 3D point tracking in your browser!
+
+---
+
+💡 **Coming Soon:** More incredible features on the way! Keep watching this space! 👀
+
 ## TODO List
 
 1. **Release Offline Version**
