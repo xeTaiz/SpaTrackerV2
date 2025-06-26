@@ -36,7 +36,11 @@
 
 ### 📅 Recent Highlights
 
-🎯 **June 2025:** 🌟 **LIVE DEMO IS HERE!** 🌟  
+🏆 **25 June 2025:** 🎊 **MAJOR MILESTONE!** 🎊  
+🥇 **SpatialTrackerV2 has been ACCEPTED by ICCV 2025!** 🥇  
+📄 See you in Hawaii!
+
+🎯 **23 June 2025:** 🌟 **LIVE DEMO IS HERE!** 🌟  
 🤖 Try our amazing Huggingface Space Demo: https://huggingface.co/spaces/Yuxihenry/SpatialTrackerV2  
 ✨ Experience the magic of 3D point tracking in your browser!
 
