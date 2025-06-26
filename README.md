@@ -74,8 +74,8 @@ To set up the environment for running the SpaTrack model, follow these steps:
 2. **Create a Virtual Environment:**
    It's recommended to use a virtual environment to manage dependencies.
    ```bash
-   conda create -n SpaTrack3 python=3.11
-   conda activate SpaTrack3
+   conda create -n SpaTrack2 python=3.11
+   conda activate SpaTrack2
    ```
 
 3. **Install Dependencies:**
@@ -90,7 +90,7 @@ To set up the environment for running the SpaTrack model, follow these steps:
    python -m pip install -r requirements.txt
    ```
 
-4. **Install SpaTrack3 Visualizer:**
+4. **Install SpaTrack2 Visualizer:**
    
    ```bash
    cd viser
@@ -105,12 +105,12 @@ mkdir -p checkpoints
 ```
 Step1: Download the checkpoint of `Moge` from [here](https://github.com/microsoft/MoGe), and put the `model.pt` into `./checkpoints/`
 
-Step2: Download the checkpoint of `SpaTrack3` from [GoolgeDrive](https://drive.google.com/drive/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?usp=sharing), and place it into `./checkpoints/`
+Step2: Download the checkpoint of `SpaTrack2` from [GoolgeDrive](https://drive.google.com/drive/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?usp=sharing), and place it into `./checkpoints/`
 
 
 
 ## Quick Start
-We gave two examples to illustrate the usage of `SpaTrack3`. Firstly, please download `ckpts` and `examples` via:
+We gave two examples to illustrate the usage of `SpaTrack2`. Firstly, please download `ckpts` and `examples` via:
 ```
 sh scripts/download.sh
 ```   
