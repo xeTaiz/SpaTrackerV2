@@ -67,8 +67,8 @@ To set up the environment for running the SpaTrack model, follow these steps:
 
 1. **Clone the Repository:**
    ```bash
-   git clone git@github.com:henry123-boy/SpaTrackerV3.git
-   cd SpaTrackerV3
+   git clone git@github.com:henry123-boy/SpaTrackerV2.git
+   cd SpaTrackerV2
    ```
 
 2. **Create a Virtual Environment:**
