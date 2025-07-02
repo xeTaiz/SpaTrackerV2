@@ -14,7 +14,7 @@
 <a target="_blank" href="">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
-<a href="">
+<a href="https://huggingface.co/spaces/Yuxihenry/SpatialTrackerV2">
   <img alt="Spaces" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue">
 </a>
 
