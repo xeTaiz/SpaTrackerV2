@@ -27,7 +27,8 @@ class Predictor(torch.nn.Module):
 
     def to(self, device: Union[str, torch.device]):
         self.spatrack.to(device)
-        self.spatrack.base_model.to(device)
+        if self.spatrack.base_model is not None:
+            self.spatrack.base_model.to(device)
 
     @classmethod
     def from_pretrained(
