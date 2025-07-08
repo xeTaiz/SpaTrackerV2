@@ -22,8 +22,8 @@ git+https://github.com/facebookresearch/segment-anything.git
 git+https://github.com/EasternJournalist/utils3d.git#egg=utils3d
 huggingface_hub
 pyceres
-kornia
-xformers
+kornia==0.8.1
+xformers==0.0.28
 timm
 PyJWT
 gdown
