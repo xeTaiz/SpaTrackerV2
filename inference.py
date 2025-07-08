@@ -42,7 +42,8 @@ if __name__ == "__main__":
     fps = int(args.fps)
     mask_dir = args.data_dir + f"/{args.video_name}.png"
     
-    os.environ["VGGT_DIR"] = hf_hub_download("Yuxihenry/SpatialTrackerCkpts", "spatrack_front.pth") #, force_download=True)
+    os.environ["VGGT_DIR"] = hf_hub_download("Yuxihenry/SpatialTrackerCkpts",
+                                                         "spatrack_front.pth") #, force_download=True)
     VGGT_DIR = os.environ["VGGT_DIR"]
     assert os.path.exists(VGGT_DIR), f"VGGT_DIR {VGGT_DIR} does not exist"
     front_track = VGGT4Track()
