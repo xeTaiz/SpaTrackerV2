@@ -15,7 +15,7 @@ visdom:
 relax_load: false
 res_all: 336
 # config the ckpt path
-ckpts: "Yuxihenry/SpatialTracker_Files"
+ckpts: "Yuxihenry/SpatialTrackerCkpts"
 batch_size: 1
 input:
   type: image
