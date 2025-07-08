@@ -24,7 +24,6 @@ from models.SpaTrackV2.models.tracker3D.spatrack_modules.utils import (
 )
 from models.SpaTrackV2.models.tracker3D.spatrack_modules.ba import extract_static_from_3DTracks, ba_pycolmap
 from models.SpaTrackV2.models.tracker3D.spatrack_modules.pointmap_updator import PointMapUpdator
-from models.SpaTrackV2.models.depth_refiner.depth_refiner import TrackStablizer
 from models.SpaTrackV2.models.tracker3D.spatrack_modules.alignment import affine_invariant_global_loss
 from models.SpaTrackV2.models.tracker3D.delta_utils.upsample_transformer import UpsampleTransformerAlibi
 

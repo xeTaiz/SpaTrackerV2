@@ -71,7 +71,7 @@ By following these steps, you should have a working environment ready to run the
 We gave two examples to illustrate the usage of `SpaTrack2`. 
 ### Type1: Monocular video as input *(Example0)*
 ```
-python inference.py --data_type="RGB" --data_dir="examples" --video_name="protein" --fps=3
+python inference.py --data_type="RGB" --data_dir="examples" --video_name="protein" --fps=5
 ```
 
 ### Type2: Customized Posed RGBD video as input *(Example1)*

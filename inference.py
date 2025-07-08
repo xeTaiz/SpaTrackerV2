@@ -170,14 +170,6 @@ if __name__ == "__main__":
                     depth_tensor = T.Resize((new_h, new_w))(torch.from_numpy(depth_tensor))
 
         if viz:
-            for i in range(c2w_traj.shape[0]):
-                img = (video)[i].permute(1,2,0).cpu().numpy()
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                cv2.imwrite(os.path.join(out_dir, f'frame_{i:04d}.png'), img)
-                point_map_i = point_map[i].cpu().numpy()
-                np.save(os.path.join(out_dir, f'point_{i:04d}.npy'), point_map_i)
-                np.save(os.path.join(out_dir, f'frame_{i:04d}.npy'), point_map_i[0])
-            
             viser.visualize(video=video[None],
                                 tracks=track2d_pred[None][...,:2],
                                 visibility=vis_pred[None],filename="test")
