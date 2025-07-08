@@ -41,14 +41,9 @@ infer_stream.py
 *.egg-info/
 **/*.egg-info
 
-eval_kinectics.py
-models/SpaTrackV2/datasets
 
-scripts
 config/fix_2d.yaml
 
-models/SpaTrackV2/datasets
-scripts/
 
 models/**/build
 models/**/dist
