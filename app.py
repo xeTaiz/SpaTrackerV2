@@ -97,7 +97,6 @@ print("✅ Models loaded successfully!")
 
 gr.set_static_paths(paths=[Path.cwd().absolute()/"_viz"]) 
 
-@spaces.GPU
 def gpu_run_inference(predictor_arg, image, points, boxes):
     """GPU-accelerated SAM inference"""
     if predictor_arg is None:
@@ -121,7 +120,6 @@ def gpu_run_inference(predictor_arg, image, points, boxes):
     
     return run_inference(predictor_arg, image, points, boxes)
 
-@spaces.GPU
 def gpu_run_tracker(tracker_model_arg, tracker_viser_arg, temp_dir, video_name, grid_size, vo_points, fps, mode="offline"):
     """GPU-accelerated tracking"""
     import torchvision.transforms as T
