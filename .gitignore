@@ -23,30 +23,17 @@ __pycache__/
 /**/**/__pycache__
 /**/__pycache__
 
-outputs
-scripts/lauch_exp/config
-scripts/lauch_exp/submit_job.log
-scripts/lauch_exp/hydra_output
-scripts/lauch_wulan
-scripts/custom_video
 # ignore the visualizer
 viser
 viser_result
 benchmark/results
 benchmark
 
-ossutil_output
-
 prev_version
 spat_ceres
 wandb
 *.log
 seg_target.py
-
-eval_davis.py
-eval_multiple_gpu.py
-eval_pose_scan.py
-eval_single_gpu.py
 
 infer_cam.py
 infer_stream.py
