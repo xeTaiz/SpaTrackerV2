@@ -1,6 +1,6 @@
 # SpatialTrackerV2: 3D Point Tracking Made Easy
 
-**[CAD&CG, Zhejiang University](https://github.com/zju3dv)**; **[University of Oxford](https://www.robots.ox.ac.uk/~vgg/)**; **[Ant Research](https://www.antresearch.com/)**; **[Pixelwise AI](http://pixelwise.ai/)**; **[NUS](https://nus.edu.sg/)**
+**[CAD&CG, Zhejiang University](https://github.com/zju3dv)**; **[University of Oxford](https://www.robots.ox.ac.uk/~vgg/)**; **[Ant Research](https://www.antresearch.com/)**; **[Pixelwise AI](http://pixelwise.ai/)**; **[Bytedance Seed](https://seed.bytedance.com/zh/)**
 
 [Yuxi Xiao](https://henry123-boy.github.io/), [Jianyuan Wang](https://jytime.github.io/), [Nan Xue](https://xuenan.net/), [Nikita Karaev](https://nikitakaraevv.github.io/), [Iurii Makarov](https://linkedin.com/in/lvoursl), [Bingyi Kang](https://bingykang.github.io/), [Xin Zhu](https://openreview.net/profile?id=~Xing_Zhu2), [Hujun Bao](http://www.cad.zju.edu.cn/home/bao/), [Yujun Shen](https://shenyujun.github.io/), [Xiaowei Zhou](https://www.xzhou.me/)
 
@@ -8,8 +8,8 @@
 
 <!-- [Paper V1]() | [Paper V2]() | [Paper V3]() | -->
 
-<a href="https://arxiv.org/abs/xxx">
-  <img alt="Technical Report" src="https://img.shields.io/badge/Technical%20Report-arXiv:xxx" style="border: 1px solid black;">
+<a href="./docs/PAPER.md" target="_blank" rel="noopener noreferrer">
+  <img src="https://img.shields.io/badge/Paper-VGGT" alt="Paper PDF">
 </a>
 <a target="_blank" href="">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
@@ -17,50 +17,24 @@
 <a href="https://huggingface.co/spaces/Yuxihenry/SpatialTrackerV2">
   <img alt="Spaces" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue">
 </a>
+<img alt="Visitors" src="https://visitor-badge.laobi.icu/badge?page_id=henry123-boy.SpaTrackerV2&left_color=green&right_color=red">
 
 
 <img width="1100" src="./assets/teaser_1.png" />
 
 
-## 🚀 Latest Updates & News
+## 📰 Latest Updates & News
 
-<div align="center">
-
-### 🎉 What's New & Exciting! 🎉
-
-</div>
-
----
-
-🔥 **Stay tuned for the most exciting developments!** We're constantly pushing the boundaries of 3D tracking technology! 🔥
-
-### 📅 Recent Highlights
-
-🏆 **25 June 2025:** 
-🥇 SpatialTrackerV2 has been ACCEPTED by ICCV 2025! 🥇  
-📄 See you in Hawaii!
-
-🎯 **23 June 2025:**
-🤖 Try our amazing Huggingface Space Demo: https://huggingface.co/spaces/Yuxihenry/SpatialTrackerV2  
-✨ Experience the magic of 3D point tracking in your browser!
-
----
-
-💡 **Coming Soon:** More incredible features on the way! Keep watching this space! 👀
+- **[June 27, 2025]**: SpatialTrackerV2 accepted by ICCV 2025
+- **[June 23, 2025]**: Huggingface Space Demo launched! Try it out: 🤗 [Huggingface Space](https://huggingface.co/spaces/Yuxihenry/SpatialTrackerV2)
 
 ## TODO List
-
-1. **Release Offline Version**
-   - [x] `SpaTrack2` + `Moge` ➔ supports `unposed RGB` as input.
-   - [x] `SpaTrack2`+ `MegaSAM` ➔ supports `Posed RGBD` as input. 
-   - [x] `SpaTrack2` + `VGGT` ➔ make `VGGT` works in `Dynamic Scenes`.
-
-2. **Release Online Version**
-   - [ ] Sliding windows version.
-
-3. **More Releases**
-   - [ ] Some `Ceres Python Bindings` designed for SpatialTracker and Dynamic Reconstruction.
+   - [x] Release quick start of `SpaTrack2-offline` 
+   - [ ] Final version of Paper at [PAPER.md](./docs/PAPER.md)
+   - [ ] Release `SpaTrack2-online`
+   - [ ] Training & Evaluation Codes.
    - [ ] More supports for other Depth Model, *i.e.*, `DepthAnything`, `StereoFoundation`, `UniDepth`, `Metric3D`.
+   - [ ] `Ceres Python Bindings` designed for SpatialTracker and Dynamic Reconstruction.
 
 ## Set up the environment
 To set up the environment for running the SpaTrack model, follow these steps:
@@ -90,42 +64,30 @@ To set up the environment for running the SpaTrack model, follow these steps:
    python -m pip install -r requirements.txt
    ```
 
-4. **Install SpaTrack2 Visualizer:**
-   
-   ```bash
-   cd viser
-   python -m pip install -e .
-   ```
 By following these steps, you should have a working environment ready to run the SpaTrack model.
-
-## Download the Checkpoints
-
-```
-mkdir -p checkpoints
-```
-Step1: Download the checkpoint of `Moge` from [here](https://github.com/microsoft/MoGe), and put the `model.pt` into `./checkpoints/`
-
-Step2: Download the checkpoint of `SpaTrack2` from [GoolgeDrive](https://drive.google.com/drive/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?usp=sharing), and place it into `./checkpoints/`
-
 
 
 ## Quick Start
-We gave two examples to illustrate the usage of `SpaTrack2`. Firstly, please download `ckpts` and `examples` via:
+We gave two examples to illustrate the usage of `SpaTrack2`. 
+### Type1: Monocular video as input *(Example0)*
+```
+python inference.py --data_type="RGB" --data_dir="examples" --video_name="protein" --fps=3
+```
+
+### Type2: Customized Posed RGBD video as input *(Example1)*
+We provide an example which has Posed RGBD input with [MegaSAM](https://github.com/mega-sam/mega-sam). 
+Firstly, please download `examples` via:
 ```
 sh scripts/download.sh
 ```   
-### Type1: Posed RGBD video *(Example0)*
-We provide an example who has Posed RGBD input with [MegaSAM](https://github.com/mega-sam/mega-sam). 
+Run it with below:
 ```
 python inference.py --data_type="RGBD" --data_dir="assets/example0" --video_name="snowboard" --fps=1
 ```  
-### Type2: unposed RGB video *(Example1)*
-```
-python inference.py --data_type="RGB" --data_dir="assets/example1" --video_name="xhs" --fps=6
-```
+
 
 ### Visualize your results
-We provide two types of visualization, i.e. `viser` and `TAPIP3D`. The guidance will be displayed in the terminal after running `inference.py`.
+The guidance will be displayed in the terminal after running `inference.py`.
 
 ## 🌟 Recommended: Gradio Demo with SAM 🌟
 Please follow the instructions in the [app_3rd README](app_3rd/README.md) to configure the dependencies. Then, 
@@ -136,7 +98,5 @@ Our gradio demo enable the user to track the points on the target object easily,
 ```
 python app.py
 ```
-Here is an example with our GUI: 
-![Demo](./assets/gradio.gif)
 
 
