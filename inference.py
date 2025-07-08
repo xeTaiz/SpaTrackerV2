@@ -46,7 +46,7 @@ if __name__ == "__main__":
     VGGT_DIR = os.environ["VGGT_DIR"]
     assert os.path.exists(VGGT_DIR), f"VGGT_DIR {VGGT_DIR} does not exist"
     front_track = VGGT4Track()
-    front_track.load_state_dict(torch.load(VGGT_DIR)["model"], strict=False)
+    front_track.load_state_dict(torch.load(VGGT_DIR), strict=False)
     front_track.eval()
     front_track = front_track.to("cuda")
 
