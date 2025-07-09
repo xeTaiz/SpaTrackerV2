@@ -68,33 +68,33 @@ By following these steps, you should have a working environment ready to run the
 
 
 ## Quick Start
-We give two examples to illustrate the usage of `SpaTrack2`. 
+Here are two examples of how to use `SpaTrack2`. 
 ### Type1: Monocular video as input *(Example0)*
 ```
-python inference.py --data_type="RGB" --data_dir="examples" --video_name="protein" --fps=5
+python inference.py --data_type="RGB" --data_dir="examples" --video_name="protein" --fps=3
 ```
 
-### Type2: Customized Posed RGBD video as input *(Example1)*
-We provide an example which has Posed RGBD input with [MegaSAM](https://github.com/mega-sam/mega-sam). 
-Firstly, please download `examples` via:
+### Type2: RGBD video + Camera poses as input *(Example1)*
+We provide an example with Depth and Camera poses from [MegaSAM](https://github.com/mega-sam/mega-sam). 
+First, download the `examples` via:
 ```
 sh scripts/download.sh
 ```   
-Run it with below:
+Then run inference with the command with below:
 ```
-python inference.py --data_type="RGBD" --data_dir="assets/example0" --video_name="snowboard" --fps=1
+python inference.py --data_type="RGBD" --data_dir="assets/example1" --video_name="snowboard" --fps=1
 ```  
 
 
 ### Visualize your results
-The guidance will be displayed in the terminal after running `inference.py`.
+Guidance will be displayed in the terminal after running `inference.py`.
 
 ## 🌟 Recommended: Gradio Demo with SAM 🌟
-Please follow the instructions in the [app_3rd README](app_3rd/README.md) to configure the dependencies. Then, 
+Please follow the instructions in the [app_3rd README](app_3rd/README.md) to configure the dependencies. Then, install the required packages: 
 ```
 python -m pip install gradio==5.31.0 pako
 ```
-Our gradio demo enables the user to track the points on the target object easily, just try:
+Our Gradio demo enables users to easily track points on the target object. Just try:
 ```
 python app.py
 ```
