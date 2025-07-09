@@ -49,3 +49,4 @@ models/**/build
 models/**/dist
 
 temp_local
+examples/results

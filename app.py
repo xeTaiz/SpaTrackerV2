@@ -26,6 +26,9 @@ import logging
 from concurrent.futures import ThreadPoolExecutor
 import atexit
 import uuid
+from models.SpaTrackV2.models.vggt4track.models.vggt_moe import VGGT4Track
+from models.SpaTrackV2.models.vggt4track.utils.load_fn import preprocess_image
+from models.SpaTrackV2.models.predictor import Predictor
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -78,20 +81,15 @@ def create_user_temp_dir():
     return temp_dir
 
 from huggingface_hub import hf_hub_download
-# init the model
-os.environ["VGGT_DIR"] = hf_hub_download("Yuxihenry/SpatialTrackerCkpts", "spatrack_front.pth") #, force_download=True)
 
-if os.environ.get("VGGT_DIR", None) is not None:
-    from models.vggt.vggt.models.vggt_moe import VGGT4Track
-    from models.vggt.vggt.utils.load_fn import preprocess_image
-    vggt_model = VGGT4Track()
-    vggt_model.load_state_dict(torch.load(os.environ.get("VGGT_DIR")), strict=False)
-    vggt_model.eval()
-    vggt_model = vggt_model.to("cuda")
+vggt4track_model = VGGT4Track.from_pretrained("Yuxihenry/SpatialTrackerV2_Front")
+vggt4track_model.eval()
+vggt4track_model = vggt4track_model.to("cuda")
 
 # Global model initialization
 print("🚀 Initializing local models...")
-tracker_model, _ = get_tracker_predictor(".", vo_points=756)
+tracker_model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
+tracker_model.eval()
 predictor = get_sam_predictor()
 print("✅ Models loaded successfully!")
 
@@ -129,7 +127,8 @@ def gpu_run_tracker(tracker_model_arg, tracker_viser_arg, temp_dir, video_name, 
         print("Initializing tracker models inside GPU function...")
         out_dir = os.path.join(temp_dir, "results")
         os.makedirs(out_dir, exist_ok=True)
-        tracker_model_arg, tracker_viser_arg = get_tracker_predictor(out_dir, vo_points=vo_points, tracker_model=tracker_model)
+        tracker_model_arg, tracker_viser_arg = get_tracker_predictor(out_dir, vo_points=vo_points,
+                                                                         tracker_model=tracker_model.cuda())
     
     # Setup paths
     video_path = os.path.join(temp_dir, f"{video_name}.mp4")
@@ -159,25 +158,23 @@ def gpu_run_tracker(tracker_model_arg, tracker_viser_arg, temp_dir, video_name, 
     data_npz_load = {}
 
     # run vggt 
-    if os.environ.get("VGGT_DIR", None) is not None:
-        # process the image tensor
-        video_tensor = preprocess_image(video_tensor)[None]
-        with torch.no_grad():
-            with torch.cuda.amp.autocast(dtype=torch.bfloat16):
-                # Predict attributes including cameras, depth maps, and point maps.
-                predictions = vggt_model(video_tensor.cuda()/255)
-                extrinsic, intrinsic = predictions["poses_pred"], predictions["intrs"]
-                depth_map, depth_conf = predictions["points_map"][..., 2], predictions["unc_metric"]
-        
-        depth_tensor = depth_map.squeeze().cpu().numpy()
-        extrs = np.eye(4)[None].repeat(len(depth_tensor), axis=0)
-        extrs = extrinsic.squeeze().cpu().numpy()
-        intrs = intrinsic.squeeze().cpu().numpy()
-        video_tensor = video_tensor.squeeze()
-        #NOTE: 20% of the depth is not reliable
-        # threshold = depth_conf.squeeze()[0].view(-1).quantile(0.6).item()
-        unc_metric = depth_conf.squeeze().cpu().numpy() > 0.5
+    # process the image tensor
+    video_tensor = preprocess_image(video_tensor)[None]
+    with torch.no_grad():
+        with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+            # Predict attributes including cameras, depth maps, and point maps.
+            predictions = vggt4track_model(video_tensor.cuda()/255)
+            extrinsic, intrinsic = predictions["poses_pred"], predictions["intrs"]
+            depth_map, depth_conf = predictions["points_map"][..., 2], predictions["unc_metric"]
 
+    depth_tensor = depth_map.squeeze().cpu().numpy()
+    extrs = np.eye(4)[None].repeat(len(depth_tensor), axis=0)
+    extrs = extrinsic.squeeze().cpu().numpy()
+    intrs = intrinsic.squeeze().cpu().numpy()
+    video_tensor = video_tensor.squeeze()
+    #NOTE: 20% of the depth is not reliable
+    # threshold = depth_conf.squeeze()[0].view(-1).quantile(0.6).item()
+    unc_metric = depth_conf.squeeze().cpu().numpy() > 0.5
     # Load and process mask
     if os.path.exists(mask_path):
         mask = cv2.imread(mask_path)
@@ -199,7 +196,6 @@ def gpu_run_tracker(tracker_model_arg, tracker_viser_arg, temp_dir, video_name, 
     
     query_xyt = torch.cat([torch.zeros_like(grid_pts[:, :, :1]), grid_pts], dim=2)[0].cpu().numpy()
     print(f"Query points shape: {query_xyt.shape}")
-    
     # Run model inference
     with torch.amp.autocast(device_type="cuda", dtype=torch.bfloat16):
         (
@@ -210,8 +206,8 @@ def gpu_run_tracker(tracker_model_arg, tracker_viser_arg, temp_dir, video_name, 
                             queries=query_xyt,
                             fps=1, full_point=False, iters_track=4,
                             query_no_BA=True, fixed_cam=False, stage=1, unc_metric=unc_metric,
-                            support_frame=len(video_tensor)-1, replace_ratio=0.2) 
-        
+                            support_frame=len(video_tensor)-1, replace_ratio=0.2)
+
         # Resize results to avoid large I/O
         max_size = 224
         h, w = video.shape[2:]

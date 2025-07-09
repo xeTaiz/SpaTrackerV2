@@ -17,16 +17,14 @@ import glob
 from rich import print
 import argparse
 import decord
-from models.vggt.vggt.models.vggt_moe import VGGT4Track
-from models.vggt.vggt.utils.load_fn import preprocess_image
-from models.vggt.vggt.utils.pose_enc import pose_encoding_to_extri_intri
-from huggingface_hub import hf_hub_download
+from models.SpaTrackV2.models.vggt4track.models.vggt_moe import VGGT4Track
+from models.SpaTrackV2.models.vggt4track.utils.load_fn import preprocess_image
+from models.SpaTrackV2.models.vggt4track.utils.pose_enc import pose_encoding_to_extri_intri
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--cfg_dir", type=str, default="config/magic_infer_offline.yaml")
+    parser.add_argument("--track_mode", type=str, default="offline")
     parser.add_argument("--data_type", type=str, default="RGBD")
-    parser.add_argument("--VGGT", action="store_true")
     parser.add_argument("--data_dir", type=str, default="assets/example0")
     parser.add_argument("--video_name", type=str, default="snowboard")
     parser.add_argument("--grid_size", type=int, default=10)
@@ -36,20 +34,14 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    cfg_dir = args.cfg_dir
     out_dir = args.data_dir + "/results"
     # fps
     fps = int(args.fps)
     mask_dir = args.data_dir + f"/{args.video_name}.png"
     
-    os.environ["VGGT_DIR"] = hf_hub_download("Yuxihenry/SpatialTrackerCkpts",
-                                                         "spatrack_front.pth") #, force_download=True)
-    VGGT_DIR = os.environ["VGGT_DIR"]
-    assert os.path.exists(VGGT_DIR), f"VGGT_DIR {VGGT_DIR} does not exist"
-    front_track = VGGT4Track()
-    front_track.load_state_dict(torch.load(VGGT_DIR), strict=False)
-    front_track.eval()
-    front_track = front_track.to("cuda")
+    vggt4track_model = VGGT4Track.from_pretrained("Yuxihenry/SpatialTrackerV2_Front")
+    vggt4track_model.eval()
+    vggt4track_model = vggt4track_model.to("cuda")
 
     if args.data_type == "RGBD":
         npz_dir = args.data_dir + f"/{args.video_name}.npz"
@@ -76,7 +68,7 @@ if __name__ == "__main__":
         with torch.no_grad():
             with torch.cuda.amp.autocast(dtype=torch.bfloat16):
                 # Predict attributes including cameras, depth maps, and point maps.
-                predictions = front_track(video_tensor.cuda()/255)
+                predictions = vggt4track_model(video_tensor.cuda()/255)
                 extrinsic, intrinsic = predictions["poses_pred"], predictions["intrs"]
                 depth_map, depth_conf = predictions["points_map"][..., 2], predictions["unc_metric"]
         
@@ -103,21 +95,23 @@ if __name__ == "__main__":
     viz = True
     os.makedirs(out_dir, exist_ok=True)
         
-    with open(cfg_dir, "r") as f:
-        cfg = yaml.load(f, Loader=yaml.FullLoader)
-    cfg = easydict.EasyDict(cfg)
-    cfg.out_dir = out_dir
-    cfg.model.track_num = args.vo_points
-    print(f"Downloading model from HuggingFace: {cfg.ckpts}")
-    checkpoint_path = hf_hub_download(
-        repo_id=cfg.ckpts,
-        repo_type="model",
-        filename="SpaTrack3_offline.pth"
-    )
-    model = Predictor.from_pretrained(checkpoint_path, model_cfg=cfg["model"])
+    # with open(cfg_dir, "r") as f:
+    #     cfg = yaml.load(f, Loader=yaml.FullLoader)
+    # cfg = easydict.EasyDict(cfg)
+    # cfg.out_dir = out_dir
+    # cfg.model.track_num = args.vo_points
+    # print(f"Downloading model from HuggingFace: {cfg.ckpts}")
+    if args.track_mode == "offline":
+        model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Offline")
+    else:
+        model = Predictor.from_pretrained("Yuxihenry/SpatialTrackerV2-Online")
+
+    # config the model; the track_num is the number of points in the grid
+    model.spatrack.track_num = args.vo_points
+    
     model.eval()
     model.to("cuda")
-    viser = Visualizer(save_dir=cfg.out_dir, grayscale=True, 
+    viser = Visualizer(save_dir=out_dir, grayscale=True, 
                      fps=10, pad_value=0, tracks_leave_trace=5)
     
     grid_size = args.grid_size

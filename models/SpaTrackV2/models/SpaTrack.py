@@ -66,15 +66,15 @@ class SpaTrack2(nn.Module, PyTorchModelHubMixin):
 
         # Tracker model
         self.Track3D = TrackRefiner3D(Track_cfg)
-        track_base_ckpt_dir = Track_cfg.base_ckpt
+        track_base_ckpt_dir = Track_cfg["base_ckpt"]
         if os.path.exists(track_base_ckpt_dir):
             track_pretrain = torch.load(track_base_ckpt_dir)
             self.Track3D.load_state_dict(track_pretrain, strict=False)
         
         # wrap the function of make lora trainable
         self.make_paras_trainable = partial(self.make_paras_trainable,
-                                            mode=ft_cfg.mode,
-                                            paras_name=ft_cfg.paras_name)
+                                            mode=ft_cfg["mode"],
+                                            paras_name=ft_cfg["paras_name"])
         self.track_num = track_num
 
     def make_paras_trainable(self, mode: str = 'fix', paras_name: List[str] = []):
@@ -149,7 +149,7 @@ class SpaTrack2(nn.Module, PyTorchModelHubMixin):
     ):  
         # step 1 allocate the query points on the grid
         T, C, H, W = video.shape
-        
+
         if annots_train is not None:
             vis_gt = annots_train["vis"]
             _, _, N = vis_gt.shape
@@ -300,39 +300,6 @@ class SpaTrack2(nn.Module, PyTorchModelHubMixin):
                                 **kwargs, annots=annots)
             if self.training:
                 loss += out["loss"].squeeze()
-            # from models.SpaTrackV2.utils.visualizer import Visualizer
-            # vis_track = Visualizer(grayscale=False,
-            #                     fps=10, pad_value=50, tracks_leave_trace=0)
-            # vis_track.visualize(video=segment,
-            #                         tracks=out["traj_est"][...,:2], 
-            #                         visibility=out["vis_est"],
-            #                         save_video=True) 
-            # # visualize 4d      
-            # import os, json
-            # import os.path as osp
-            # viser4d_dir = os.path.join("viser_4d_results")
-            # os.makedirs(viser4d_dir, exist_ok=True)
-            # depth_est = annots["depth_gt"][0]
-            # unc_metric = out["unc_metric"]
-            # mask = (unc_metric > 0.5).squeeze(1)
-            # # pose_est = out["poses_pred"].squeeze(0)
-            # pose_est = annots["traj_mat"][0]
-            # rgb_tracks = out["rgb_tracks"].squeeze(0)
-            # intrinsics = out["intrs"].squeeze(0)
-            # for i_k in range(out["depth"].shape[0]):
-            #     img_i = out["imgs_raw"][0][i_k].permute(1, 2, 0).cpu().numpy()
-            #     img_i = cv2.cvtColor(img_i, cv2.COLOR_BGR2RGB)
-            #     cv2.imwrite(osp.join(viser4d_dir, f'frame_{i_k:04d}.png'), img_i)
-            #     if stage == 1:
-            #         depth = depth_est[i_k].squeeze().cpu().numpy()
-            #         np.save(osp.join(viser4d_dir, f'frame_{i_k:04d}.npy'), depth)
-            #     else:
-            #         point_map_vis = out["points_map"][i_k].cpu().numpy()
-            #         np.save(osp.join(viser4d_dir, f'point_{i_k:04d}.npy'), point_map_vis)
-            # np.save(os.path.join(viser4d_dir, f'intrinsics.npy'), intrinsics.cpu().numpy())
-            # np.save(os.path.join(viser4d_dir, f'extrinsics.npy'), pose_est.cpu().numpy())
-            # np.save(os.path.join(viser4d_dir, f'conf.npy'), mask.float().cpu().numpy())
-            # np.save(os.path.join(viser4d_dir, f'colored_track3d.npy'), rgb_tracks.cpu().numpy())
 
             queries_len = len(queries_new)
             # update the track3d and track2d
@@ -724,40 +691,3 @@ class SpaTrack2(nn.Module, PyTorchModelHubMixin):
                     }
                 
         return ret
-
-
-
-
-# three stages of training
-
-# stage 1: 
-# gt depth and intrinsics synthetic (includes Dynamic Replica, Kubric, Pointodyssey, Vkitti, TartanAir and Indoor() ) Motion Patern (tapvid3d)
-# Tracking and Pose as well -> based on gt depth and intrinsics
-# (Finished) -> (megasam + base model) vs. tapip3d.     (use depth from megasam or pose, which keep the same setting as tapip3d.)
-
-# stage 2: fixed 3D tracking 
-# Joint depth refiner 
-# input depth from whatever + rgb -> temporal module + scale and shift token -> coarse alignment -> scale and shift 
-# estimate the 3D tracks -> 3D tracks combine with pointmap -> update for pointmap (iteratively) -> residual map B T 3 H W 
-# ongoing two days
-
-# stage 3: train multi windows by propagation 
-# 4 frames overlapped -> train on 64 -> fozen image encoder and finetuning the transformer  (learnable parameters pretty small) 
-
-# types of scenarioes:
-# 1. auto driving (waymo open dataset)
-# 2. robot
-# 3. internet ego video
-
-
-
-# Iterative Transformer -- Solver -- General Neural MegaSAM + Tracks
-# Update Variables:
-# 1. 3D tracks B T N 3  xyz.
-# 2. 2D tracks B T N 2  x y.
-# 3. Dynamic Mask B T H W.
-# 4. Camera Pose B T 4 4.
-# 5. Video Depth.
-
-# (RGB, RGBD, RGBD+Pose) x (Static, Dynamic)
-# Campatiablity by product. 

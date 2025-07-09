@@ -8,14 +8,14 @@ import torch
 import torch.nn as nn
 from huggingface_hub import PyTorchModelHubMixin  # used for model hub
 
-from models.vggt.vggt.models.aggregator import Aggregator
-from models.vggt.vggt.heads.camera_head import CameraHead
-from models.vggt.vggt.heads.dpt_head import DPTHead
-from models.vggt.vggt.heads.track_head import TrackHead
-from models.vggt.vggt.utils.loss import compute_loss
-from models.vggt.vggt.utils.pose_enc import pose_encoding_to_extri_intri
+from models.SpaTrackV2.models.vggt4track.models.aggregator import Aggregator
+from models.SpaTrackV2.models.vggt4track.heads.camera_head import CameraHead
+from models.SpaTrackV2.models.vggt4track.heads.dpt_head import DPTHead
+from models.SpaTrackV2.models.vggt4track.heads.track_head import TrackHead
+from models.SpaTrackV2.models.vggt4track.utils.loss import compute_loss
+from models.SpaTrackV2.models.vggt4track.utils.pose_enc import pose_encoding_to_extri_intri
 from models.SpaTrackV2.models.tracker3D.spatrack_modules.utils import depth_to_points_colmap, get_nth_visible_time_index
-from models.vggt.vggt.utils.load_fn import preprocess_image
+from models.SpaTrackV2.models.vggt4track.utils.load_fn import preprocess_image
 from einops import rearrange
 import torch.nn.functional as F
 

@@ -11,9 +11,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from models.vggt.vggt.layers import Mlp
-from models.vggt.vggt.layers.block import Block
-from models.vggt.vggt.heads.head_act import activate_pose
+from models.SpaTrackV2.models.vggt4track.layers import Mlp
+from models.SpaTrackV2.models.vggt4track.layers.block import Block
+from models.SpaTrackV2.models.vggt4track.heads.head_act import activate_pose
 
 
 class ScaleHead(nn.Module):

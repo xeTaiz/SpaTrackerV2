@@ -9,12 +9,12 @@ import torch.nn as nn
 from torch.utils.checkpoint import checkpoint
 from huggingface_hub import PyTorchModelHubMixin  # used for model hub
 
-from models.vggt.vggt.models.aggregator_front import Aggregator
-from models.vggt.vggt.heads.camera_head import CameraHead
-from models.vggt.vggt.heads.scale_head import ScaleHead
+from models.SpaTrackV2.models.vggt4track.models.aggregator_front import Aggregator
+from models.SpaTrackV2.models.vggt4track.heads.camera_head import CameraHead
+from models.SpaTrackV2.models.vggt4track.heads.scale_head import ScaleHead
 from einops import rearrange
-from models.vggt.vggt.utils.loss import compute_loss
-from models.vggt.vggt.utils.pose_enc import pose_encoding_to_extri_intri
+from models.SpaTrackV2.utils.loss import compute_loss
+from models.SpaTrackV2.utils.pose_enc import pose_encoding_to_extri_intri
 import torch.nn.functional as F
 
 class FrontTracker(nn.Module, PyTorchModelHubMixin):

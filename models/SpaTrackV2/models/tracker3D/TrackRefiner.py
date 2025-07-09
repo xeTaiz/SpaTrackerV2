@@ -30,7 +30,7 @@ from models.SpaTrackV2.models.tracker3D.delta_utils.upsample_transformer import 
 class TrackRefiner3D(CoTrackerThreeOffline):
 
     def __init__(self, args=None):
-        super().__init__(**args.base)
+        super().__init__(**args["base"])
         
         """
         This is 3D warpper from cotracker, which load the cotracker pretrain and
@@ -46,15 +46,7 @@ class TrackRefiner3D(CoTrackerThreeOffline):
         self.proj_xyz_embed = Mlp(in_features=1210+50, hidden_features=1110, out_features=1110)
         # get the anchor point's embedding, and init the pts refiner
         update_pts = True
-        # self.corr_transformer = nn.ModuleList([
-        #     CorrPointformer(
-        #         dim=128,
-        #         num_heads=8,
-        #         head_dim=128 // 8,
-        #         mlp_ratio=4.0,
-        #     )
-        #     for _ in range(self.corr_levels)
-        # ])
+
         self.corr_transformer = nn.ModuleList([
             CorrPointformer(
                 dim=128,
@@ -67,29 +59,11 @@ class TrackRefiner3D(CoTrackerThreeOffline):
         self.fnet = BasicEncoder(input_dim=3, 
                                  output_dim=self.latent_dim, stride=self.stride)
         self.corr3d_radius = 3
-
-        if args.stablizer:   
-            self.scale_shift_tokens = nn.Parameter(torch.randn(1, 2, self.latent_dim, requires_grad=True))
-            self.upsample_kernel_size = 5
-            self.residual_embedding = nn.Parameter(torch.randn(
-                                            self.latent_dim, self.model_resolution[0]//16, 
-                                            self.model_resolution[1]//16, requires_grad=True))
-            self.dense_mlp = nn.Conv2d(2*self.latent_dim+63, self.latent_dim, kernel_size=1, stride=1, padding=0)
-            self.upsample_factor = 4
-            self.upsample_transformer = UpsampleTransformerAlibi(
-                kernel_size=self.upsample_kernel_size, # kernel_size=3, # 
-                stride=self.stride,
-                latent_dim=self.latent_dim,
-                num_attn_blocks=2,
-                upsample_factor=4,
-            )
-        else:
-            self.update_pointmap = None
         
-        self.mode = args.mode
+        self.mode = args["mode"]
         if self.mode == "online":
-            self.s_wind = args.s_wind
-            self.overlap = args.overlap
+            self.s_wind = args["s_wind"]
+            self.overlap = args["overlap"]
 
     def upsample_with_mask(
         self, inp: torch.Tensor, mask: torch.Tensor
@@ -1061,29 +1035,7 @@ class TrackRefiner3D(CoTrackerThreeOffline):
             vis_est = (vis_est>0.5).float()
             sync_loss += (vis_est.detach()[...,None]*(coords_proj_curr - coords_proj).norm(dim=-1, keepdim=True)*(1-mask_nan[...,None].float())).mean()
             # coords_proj_curr[~mask_nan.view(B*T, N)] = coords_proj.view(B*T, N, 2)[~mask_nan.view(B*T, N)].to(coords_proj_curr.dtype)
-            # if torch.isnan(coords_proj_curr).sum()>0:
-            #     import pdb; pdb.set_trace()
 
-            if False:
-                point_map_resize = point_map.clone().view(B, T, 3, H, W)
-                update_input = torch.cat([point_map_resize, metric_unc.view(B,T,1,H,W)], dim=2)
-                coords_append_resize = coords.clone().detach()
-                coords_append_resize[..., :2] = coords_append_resize[..., :2] * float(self.stride) 
-                update_track_input = self.norm_xyz(cam_pts_est)*5
-                update_track_input = torch.cat([update_track_input, vis_est[...,None]], dim=-1)
-                update_track_input = posenc(update_track_input, min_deg=0, max_deg=12)
-                update = self.update_pointmap.stablizer(update_input, 
-                                                        update_track_input, coords_append_resize)#, imgs=video, vis_track=viser)
-                #NOTE: update the point map
-                point_map_resize += update
-                point_map_refine_out = F.interpolate(point_map_resize.view(B*T, -1, H, W),
-                                                                size=(self.image_size[0].item(), self.image_size[1].item()), mode='nearest')
-                point_map_refine_out = rearrange(point_map_refine_out, '(b t) c h w -> b t c h w', t=T, b=B)
-                point_map_preds.append(self.denorm_xyz(point_map_refine_out))
-                point_map_org = self.denorm_xyz(point_map_refine_out).view(B*T, 3, H_, W_)
-
-            # if torch.isnan(coords).sum()>0:
-            #     import pdb; pdb.set_trace()
             #NOTE: the 2d tracking + unproject depth
             fix_cam_est = coords_append.clone()
             fix_cam_est[...,2] = depth_unproj

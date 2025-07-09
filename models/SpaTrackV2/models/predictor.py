@@ -16,81 +16,20 @@ from typing import Union, Optional
 import cv2
 import os
 import decord
+from huggingface_hub import PyTorchModelHubMixin  # used for model hub
 
-class Predictor(torch.nn.Module):
+class Predictor(torch.nn.Module, PyTorchModelHubMixin):
     def __init__(self, args=None):
         super().__init__()
         self.args = args
         self.spatrack = SpaTrack2(loggers=[None, None, None], **args)
-        self.S_wind = args.Track_cfg.s_wind
-        self.overlap = args.Track_cfg.overlap
+        self.S_wind = args["Track_cfg"]["s_wind"]
+        self.overlap = args["Track_cfg"]["overlap"]
 
     def to(self, device: Union[str, torch.device]):
         self.spatrack.to(device)
         if self.spatrack.base_model is not None:
             self.spatrack.base_model.to(device)
-
-    @classmethod
-    def from_pretrained(
-        cls,
-        pretrained_model_name_or_path: Union[str, Path],
-        *,
-        force_download: bool = False,
-        cache_dir: Optional[str] = None,
-        device: Optional[Union[str, torch.device]] = None,
-        model_cfg: Optional[dict] = None,
-        **kwargs,
-    ) -> "SpaTrack2":
-        """
-        Load a pretrained model from a local file or a remote repository.
-
-        Args:
-            pretrained_model_name_or_path (str or Path):
-                - Path to a local model file (e.g., `./model.pth`).
-                - HuggingFace Hub model ID (e.g., `username/model-name`).
-            force_download (bool, optional):
-                Whether to force re-download even if cached. Default: False.
-            cache_dir (str, optional):
-                Custom cache directory. Default: None (use default cache).
-            device (str or torch.device, optional):
-                Target device (e.g., "cuda", "cpu"). Default: None (keep original).
-            **kwargs:
-                Additional config overrides.
-
-        Returns:
-            SpaTrack2: Loaded pretrained model.
-        """
-        # (1) check the path is local or remote
-        if isinstance(pretrained_model_name_or_path, Path):
-            model_path = str(pretrained_model_name_or_path)
-        else:
-            model_path = pretrained_model_name_or_path
-        # (2) if the path is remote, download it
-        if not os.path.exists(model_path):
-            raise NotImplementedError("Remote download not implemented yet. Use a local path.")
-        # (3) load the model weights
-
-        state_dict = torch.load(model_path, map_location="cpu")
-        # (4) initialize the model (can load config.json if exists)
-        config_path = os.path.join(os.path.dirname(model_path), "config.json")
-        config = {}
-        if os.path.exists(config_path):
-            import json
-            with open(config_path, "r") as f:
-                config.update(json.load(f))
-        config.update(kwargs)  # allow override the config
-        if model_cfg is not None:
-            config = model_cfg
-        model = cls(config)
-        if "model" in state_dict:
-            model.spatrack.load_state_dict(state_dict["model"], strict=False)
-        else:
-            model.spatrack.load_state_dict(state_dict, strict=False)
-        # (5) device management
-        if device is not None:
-            model.to(device)
-
-        return model
 
     def forward(self, video: str|torch.Tensor|np.ndarray,
                  depth: str|torch.Tensor|np.ndarray=None,
@@ -146,7 +85,6 @@ class Predictor(torch.nn.Module):
                                                 window_len=self.S_wind, overlap_len=self.overlap, track2d_gt=track2d_gt, full_point=full_point, iters_track=iters_track,
                                                 fixed_cam=fixed_cam, query_no_BA=query_no_BA, stage=stage, support_frame=support_frame, replace_ratio=replace_ratio) + (video[:T_],)
             
-        
         return ret
 
     
