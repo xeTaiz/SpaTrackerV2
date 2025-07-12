@@ -47,7 +47,7 @@ To set up the environment for running the SpaTrack model, follow these steps:
    
    # optionally download the example data to run the examples
    # Note: This will slowdown the clonining process, as it includes large files.
-   git submodule examples update --init --recursive
+   git submodule update --init --recursive
    ```
    
 
