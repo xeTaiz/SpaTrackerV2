@@ -8,7 +8,7 @@
 
 <!-- [Paper V1]() | [Paper V2]() | [Paper V3]() | -->
 
-<a href="./docs/PAPER.md" target="_blank" rel="noopener noreferrer">
+<a href="https://github.com/SpatialTracker/SpatialTracker.github.io/blob/master/static/pdfs/SpatialTrackerV2_ICCV2025_compressed.pdf" target="_blank" rel="noopener noreferrer">
   <img src="https://img.shields.io/badge/Paper-VGGT" alt="Paper PDF">
 </a>
 <a target="_blank" href="">
@@ -30,7 +30,7 @@
 
 ## TODO List
    - [x] Release quick start of `SpaTrack2-offline` 
-   - [ ] Final version of Paper at [PAPER.md](./docs/PAPER.md)
+   - [x] Final version of Paper at [PAPER.md](./docs/PAPER.md)
    - [ ] Release `SpaTrack2-online`
    - [ ] Training & Evaluation Codes.
    - [ ] More supports for other Depth Model, *e.g.*, `DepthAnything`, `StereoFoundation`, `UniDepth`, `Metric3D`.
