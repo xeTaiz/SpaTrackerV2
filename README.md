@@ -5,7 +5,7 @@
 [Yuxi Xiao](https://henry123-boy.github.io/), [Jianyuan Wang](https://jytime.github.io/), [Nan Xue](https://xuenan.net/), [Nikita Karaev](https://nikitakaraevv.github.io/), [Iurii Makarov](https://linkedin.com/in/lvoursl), [Bingyi Kang](https://bingykang.github.io/), [Xin Zhu](https://openreview.net/profile?id=~Xing_Zhu2), [Hujun Bao](http://www.cad.zju.edu.cn/home/bao/), [Yujun Shen](https://shenyujun.github.io/), [Xiaowei Zhou](https://www.xzhou.me/)
 
 ```bibtex
-@inproceedings{xiao2025spatialtrackerv23dpointtracking,
+@inproceedings{xiao2025spatialtrackerv2,
       title={SpatialTrackerV2: 3D Point Tracking Made Easy}, 
       author={Yuxi Xiao and Jianyuan Wang and Nan Xue and Nikita Karaev and Yuri Makarov and Bingyi Kang and Xing Zhu and Hujun Bao and Yujun Shen and Xiaowei Zhou},
       year={2025},
