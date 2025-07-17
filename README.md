@@ -4,6 +4,17 @@
 
 [Yuxi Xiao](https://henry123-boy.github.io/), [Jianyuan Wang](https://jytime.github.io/), [Nan Xue](https://xuenan.net/), [Nikita Karaev](https://nikitakaraevv.github.io/), [Iurii Makarov](https://linkedin.com/in/lvoursl), [Bingyi Kang](https://bingykang.github.io/), [Xin Zhu](https://openreview.net/profile?id=~Xing_Zhu2), [Hujun Bao](http://www.cad.zju.edu.cn/home/bao/), [Yujun Shen](https://shenyujun.github.io/), [Xiaowei Zhou](https://www.xzhou.me/)
 
+```bibtex
+@misc{xiao2025spatialtrackerv23dpointtracking,
+      title={SpatialTrackerV2: 3D Point Tracking Made Easy}, 
+      author={Yuxi Xiao and Jianyuan Wang and Nan Xue and Nikita Karaev and Yuri Makarov and Bingyi Kang and Xing Zhu and Hujun Bao and Yujun Shen and Xiaowei Zhou},
+      year={2025},
+      eprint={2507.12462},
+      url={https://arxiv.org/abs/2507.12462}, 
+}
+```
+
+
 ### [Project Page](https://spatialtracker.github.io/) | [BibTeX]() | [Google Drive](https://drive.google.com/drive/u/1/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?dmr=1&ec=wgc-drive-globalnav-goto) 
 <!-- <a target="_blank" href="">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
