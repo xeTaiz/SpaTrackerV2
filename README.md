@@ -6,11 +6,7 @@
 
 ### [Project Page](https://spatialtracker.github.io/) | [BibTeX]() | [Google Drive](https://drive.google.com/drive/u/1/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?dmr=1&ec=wgc-drive-globalnav-goto) 
 
-<!-- [Paper V1]() | [Paper V2]() | [Paper V3]() | -->
-
-<a href="https://github.com/SpatialTracker/SpatialTracker.github.io/blob/master/static/pdfs/SpatialTrackerV2_ICCV2025_compressed.pdf" target="_blank" rel="noopener noreferrer">
-  <img src="https://img.shields.io/badge/Paper-VGGT" alt="Paper PDF">
-</a>
+<a href="https://arxiv.org/abs/2507.12462"><img src="https://img.shields.io/badge/arXiv-2412.03451-b31b1b" alt="arXiv"></a>
 <a target="_blank" href="">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
