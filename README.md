@@ -5,11 +5,11 @@
 [Yuxi Xiao](https://henry123-boy.github.io/), [Jianyuan Wang](https://jytime.github.io/), [Nan Xue](https://xuenan.net/), [Nikita Karaev](https://nikitakaraevv.github.io/), [Iurii Makarov](https://linkedin.com/in/lvoursl), [Bingyi Kang](https://bingykang.github.io/), [Xin Zhu](https://openreview.net/profile?id=~Xing_Zhu2), [Hujun Bao](http://www.cad.zju.edu.cn/home/bao/), [Yujun Shen](https://shenyujun.github.io/), [Xiaowei Zhou](https://www.xzhou.me/)
 
 ### [Project Page](https://spatialtracker.github.io/) | [BibTeX]() | [Google Drive](https://drive.google.com/drive/u/1/folders/1GYeC639gA23N_OiytGHXTUCSYrbM0pOo?dmr=1&ec=wgc-drive-globalnav-goto) 
-
-<a href="https://arxiv.org/abs/2507.12462"><img src="https://img.shields.io/badge/arXiv-2412.03451-b31b1b" alt="arXiv"></a>
-<a target="_blank" href="">
+<!-- <a target="_blank" href="">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>
+  </a>
+-->
+<a href="https://arxiv.org/abs/2507.12462"><img src="https://img.shields.io/badge/arXiv-2507.12462-b31b1b" alt="arXiv"></a>
 <a href="https://huggingface.co/spaces/Yuxihenry/SpatialTrackerV2">
   <img alt="Spaces" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue">
 </a>
@@ -21,6 +21,7 @@
 
 ## 📰 Latest Updates & News
 
+- **[July 17, 2025]**: Our paper is on [arXiv](https://arxiv.org/abs/2507.12462)
 - **[June 27, 2025]**: SpatialTrackerV2 accepted by ICCV 2025
 - **[June 23, 2025]**: Huggingface Space Demo launched! Try it out: 🤗 [Huggingface Space](https://huggingface.co/spaces/Yuxihenry/SpatialTrackerV2)
 
