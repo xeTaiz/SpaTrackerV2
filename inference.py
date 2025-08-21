@@ -7,7 +7,9 @@ import numpy as np
 import cv2
 import torch
 import torchvision.transforms as T
+from torchvision.io import read_image
 from PIL import Image
+from pathlib import Path
 import io
 import moviepy.editor as mp
 from models.SpaTrackV2.utils.visualizer import Visualizer
@@ -58,10 +60,17 @@ if __name__ == "__main__":
         extrs = extrs[::fps]
         unc_metric = None
     elif args.data_type == "RGB":
-        vid_dir = os.path.join(args.data_dir, f"{args.video_name}.mp4")
-        video_reader = decord.VideoReader(vid_dir)
-        video_tensor = torch.from_numpy(video_reader.get_batch(range(len(video_reader))).asnumpy()).permute(0, 3, 1, 2)  # Convert to tensor and permute to (N, C, H, W)
-        video_tensor = video_tensor[::fps].float()
+        data_dir = Path(args.data_dir)
+        if (data_dir/args.video_name).is_dir():
+            jpg_dir = data_dir / args.video_name
+            out_dir = str(jpg_dir/'STv2')
+            fns = list(sorted(jpg_dir.glob('*.jpg')))
+            video_tensor = torch.stack([read_image(str(fn)) for fn in fns], dim=0).float()
+        else:
+            vid_dir = os.path.join(args.data_dir, f"{args.video_name}.mp4")
+            video_reader = decord.VideoReader(vid_dir)
+            video_tensor = torch.from_numpy(video_reader.get_batch(range(len(video_reader))).asnumpy()).permute(0, 3, 1, 2)  # Convert to tensor and permute to (N, C, H, W)
+            video_tensor = video_tensor[::fps].float()
 
         # process the image tensor
         video_tensor = preprocess_image(video_tensor)[None]
