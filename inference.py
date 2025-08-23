@@ -156,9 +156,9 @@ if __name__ == "__main__":
         
         # resize the results to avoid too large I/O Burden
         # depth and image, the maximum side is 336
-        max_size = 336
+        max_size = 518
         h, w = video.shape[2:]
-        scale = min(max_size / h, max_size / w)
+        scale = 1#min(max_size / h, max_size / w)
         if scale < 1:
             new_h, new_w = int(h * scale), int(w * scale)
             video = T.Resize((new_h, new_w))(video)
@@ -180,10 +180,12 @@ if __name__ == "__main__":
 
         # save as the tapip3d format   
         data_npz_load["coords"] = (torch.einsum("tij,tnj->tni", c2w_traj[:,:3,:3], track3d_pred[:,:,:3].cpu()) + c2w_traj[:,:3,3][:,None,:]).numpy()
+        data_npz_load["grid_pts"] = grid_pts.cpu().numpy()
         data_npz_load["extrinsics"] = torch.inverse(c2w_traj).cpu().numpy()
         data_npz_load["intrinsics"] = intrs.cpu().numpy()
         depth_save = point_map[:,2,...]
         depth_save[conf_depth<0.5] = 0
+        data_npz_load["point_map"] = point_map.cpu().numpy()
         data_npz_load["depths"] = depth_save.cpu().numpy()
         data_npz_load["video"] = (video_tensor).cpu().numpy()/255
         data_npz_load["visibs"] = vis_pred.cpu().numpy()
