@@ -31,6 +31,7 @@ def parse_args():
     parser.add_argument("--video_name", type=str, default="snowboard")
     parser.add_argument("--grid_size", type=int, default=10)
     parser.add_argument("--vo_points", type=int, default=756)
+    parser.add_argument("--reverse", action='store_true')
     parser.add_argument("--fps", type=int, default=1)
     return parser.parse_args()
 
@@ -66,6 +67,8 @@ if __name__ == "__main__":
             out_dir = str(jpg_dir/'STv2')
             fns = list(sorted(jpg_dir.glob('*.jpg')))
             video_tensor = torch.stack([read_image(str(fn)) for fn in fns], dim=0).float()
+            if args.reverse:
+                video_tensor = video_tensor.flip(0)
         else:
             vid_dir = os.path.join(args.data_dir, f"{args.video_name}.mp4")
             video_reader = decord.VideoReader(vid_dir)
@@ -190,6 +193,9 @@ if __name__ == "__main__":
         data_npz_load["video"] = (video_tensor).cpu().numpy()/255
         data_npz_load["visibs"] = vis_pred.cpu().numpy()
         data_npz_load["unc_metric"] = conf_depth.cpu().numpy()
-        np.savez(os.path.join(out_dir, f'result.npz'), **data_npz_load)
+        if args.reverse:
+            np.savez(os.path.join(out_dir, f'result_rev.npz'), **data_npz_load)
+        else:
+            np.savez(os.path.join(out_dir, f'result.npz'), **data_npz_load)
 
         print(f"Results saved to {out_dir}.\nTo visualize them with tapip3d, run: [bold yellow]python tapip3d_viz.py {out_dir}/result.npz[/bold yellow]")
